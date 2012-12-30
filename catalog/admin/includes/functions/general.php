@@ -1510,8 +1510,8 @@
       $string .= '<input type="radio" class="AllPages"  name="' . $name . '" value="all" ' . $checkall . ' />' . ALL_PAGES . '<br />';
       $string .= '<input type="radio" class="AnyPages"  name="' . $name . '" value="null" ' . $checkany . ' />' . ANY_PAGES . '<br />';
       $string .= '<br /><strong>&nbsp;&nbsp;' . ONE_BY_ONE . '</strong><br /><br />';    
-      for ($i=0, $n=sizeof($select_array); $i<$n; $i++) {        
-      $string .= '&nbsp;&nbsp;<input type="checkbox" class="ThisPage" name="' . $name . '" value="' . $select_array[$i] . ';"';
+      for ($i=0, $n=sizeof($select_array); $i<$n; $i++) {   
+      $string .= '&nbsp;&nbsp;<input type="checkbox" class="ThisPage" name="' . $name . '" value="' . $select_array[$i] . '"';
           if(isset($selected_array))
             {                      
             foreach($selected_array as $value){            

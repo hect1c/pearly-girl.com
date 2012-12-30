@@ -39,7 +39,7 @@
           $pages = '';
           $count = count($value);
           for($i=0 ; $i<$count; $i++){
-          $pages = "$pages$value[$i]";
+          $pages = $pages.$value[$i].";";
           tep_db_query("update " . TABLE_CONFIGURATION . " set configuration_value = '" . $pages . "' where configuration_key = '" . $key . "'"); 
                }
           }
@@ -300,8 +300,9 @@
 
         $contents[] = array('text' => '<br />' . $mInfo->description);
         // bof Dynamic Template System
-        $files = explode(";", $keys);        
-        foreach($files as $file){        
+        $files = explode(";", $keys);
+
+        foreach($files as $file){     
         $contents[] = array('text' =>  $file);
         }
         // eof Dynamic Template System

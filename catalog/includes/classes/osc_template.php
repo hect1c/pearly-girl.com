@@ -68,7 +68,7 @@
     }
 
     function buildBlocks() {
-      global $language;
+      global $language, $PHP_SELF;
 
       if ( defined('TEMPLATE_BLOCK_GROUPS') && tep_not_null(TEMPLATE_BLOCK_GROUPS) ) {
         $tbgroups_array = explode(';', TEMPLATE_BLOCK_GROUPS);
@@ -81,7 +81,6 @@
 
             foreach ( $modules_array as $module ) {
               $class = substr($module, 0, strrpos($module, '.'));
-
               if ( !class_exists($class) ) {
                 include(DIR_WS_LANGUAGES . $language . '/modules/' . $group . '/' . $module);
                 include(DIR_WS_MODULES . $group . '/' . $class . '.php');
@@ -93,10 +92,10 @@
               if(!isset($mb->pages) && ($mb->isEnabled())){
                 $this->pages = 'all';              
                 $mb->execute();              
-                }else{              
-              if(($mb->isEnabled()) && (($mb->pages === 'all') || (in_array($PHP_SELF , explode(';' , $mb->pages))))){
-                $mb->execute();
-                }
+              } else {              
+                if(($mb->isEnabled()) && (($mb->pages === 'all') || (in_array($PHP_SELF , explode(';' , $mb->pages))))){
+                  $mb->execute();
+                  }
               }
               // eof Dynamic Template System
             }
