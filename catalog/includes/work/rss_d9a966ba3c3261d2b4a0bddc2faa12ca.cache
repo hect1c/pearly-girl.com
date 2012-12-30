@@ -1,0 +1,125 @@
+a:12:{s:8:"encoding";s:5:"UTF-8";s:5:"title";s:18:"osCommerce Add-Ons";s:4:"link";s:25:"http://www.oscommerce.com";s:11:"description";s:29:"osCommerce, Sell With Emotion";s:8:"language";s:2:"en";s:9:"copyright";s:29:"Copyright (c) 2012 osCommerce";s:14:"managingEditor";s:19:"hpdl@oscommerce.com";s:11:"image_title";s:10:"osCommerce";s:9:"image_url";s:53:"http://www.oscommerce.com/images/oscommerce_88x31.gif";s:10:"image_link";s:25:"http://www.oscommerce.com";s:5:"items";a:5:{i:0;a:4:{s:5:"title";s:25:"Home or Business Customer";s:4:"link";s:38:"http://addons.oscommerce.com/info/4625";s:11:"description";s:1692:"In some occasions it can be helpful to limit a payment method exclusively to business users only. For example the payment method &quot;on account&quot;. <br />
+<br />
+Adding below code can be done for each payment method located in catalog/includes/modules/payment. Just look for the line starting with &quot;$this-&gt;enabled = etc etc... and add this right below it.<br />
+<br />
+    function update_status() {<br />
+      global $order;<br />
+      global $customer_id;<br />
+<br />
+//enable or disable the payment module based on user account type<br />
+      if ( $this-&gt;enabled == true ) {<br />
+        $check_flag = false;<br />
+<br />
+        $check_query = tep_db_query(&quot;select customers_usertype from &quot; . TABLE_CUSTOMERS . &quot; where customers_id = '&quot; . $customer_id .&quot;'&quot;);<br />
+<br />
+        while ($check = tep_db_fetch_array($check_query)) {<br />
+          if ($check['customers_usertype']== b) {<br />
+            $check_flag = true;<br />
+            break;<br />
+          }<br />
+        }<br />
+<br />
+        if ($check==b) $check_flag=true;<br />
+        if ($check_flag == false) {<br />
+          $this-&gt;enabled = false;<br />
+        }<br />
+      }<br />
+<br />
+The result is that this particular payment method will no longer show up for users with a Private account, but only for users with a Business account. <br />
+<br />
+If you would like to have it the other way around, just change  this line:<br />
+  if ($check['customers_usertype']== b) { <br />
+to this:<br />
+  if ($check['customers_usertype']== h) {<br />
+<br />
+Hope this is helpful to others looking for such a solution. The attached file contains this information.";s:7:"pubDate";s:31:"Sun, 30 Dec 2012 17:07:48 +0100";}i:1;a:4:{s:5:"title";s:5:"iOSC3";s:4:"link";s:38:"http://addons.oscommerce.com/info/7636";s:11:"description";s:3007:"See iOSC 5.3. for OSC 2.2rc2a here: www.sarplataygemas.com/mobile_index.php (live shop)<br />
+<br />
+Changelog v5.3:<br />
+<br />
+* Radio buttons for gender selection changed to more touchscreen friendly drop down menu in the mobile account files.<br />
+<br />
+* &quot;create account&quot; and &quot;enter account&quot; text links in mobile index changed to more touchscreen friendly buttons.<br />
+<br />
+* Layout changes in mobile shopping cart: quantity &quot;update&quot; button moved to each product, &quot;remove&quot; button added to each product.<br />
+<br />
+* mobile checkout shipping and payment:<br />
+  a. shipping and payment method radio buttons changed to more touchscreen friendly big selection areas like the category selector in mobile catalogue.<br />
+  b. text link &quot;change address&quot; replaced by more touch screen friendly big selection area.<br />
+  c. fix for non registering comments.<br />
+  d. &quot;back&quot; and &quot;continue&quot; buttons placed at the bottom of the page.<br />
+  <br />
+* mobile checkout shipping and payment address:<br />
+  a. radio buttons for address selection replaced by more touchscreen friendly auto-update drop down menus.<br />
+  b. radio buttons for gender selection changed to more touchscreen friendly drop down menu in the new address section.<br />
+  c. new mobile_checkout_new_address.php file added to match the mobile layout.<br />
+  <br />
+* in mobile checkout confirmation:<br />
+  a. Additional payment description moved from the top of the page below the payment method.<br />
+  b. Fix for missing comments.<br />
+  c. Text links &quot;change&quot; replaced by more touch screen friendly buttons.<br />
+  d. &quot;back&quot; and &quot;continue&quot; buttons placed at the bottom of the page.<br />
+<br />
+* Fix in mobile checkout payment: missing javascript_validation. (thanks to Bernhard Bauer)<br />
+<br />
+* Fix for missing image alt text in mobile product info. (thanks to Bernhard Bauer)<br />
+<br />
+* Fix for sql query: &quot;null&quot; replaced with '' in the set function entry for some configuration settings. (thanks to Davelaar)<br />
+<br />
+* php 5.3 compatibility fix in mobile/includes/classes/mobile_redirect.php (thanks to Davelaar)<br />
+  function &quot;split&quot; changed to &quot;explode&quot;.<br />
+<br />
+* fix to avoid Chrome or IE's  &quot;Confirm Form Resubmission&quot; message when jumping back from mobile_checkout_payment.php to mobile_checkout_shipping.php<br />
+<br />
+* html tags rewritten in mobile header for better validation (thanks to roaddoctor)<br />
+  &lt;&quot;noindex, nofollow&quot;&gt; tags removed and added only to checkout pages<br />
+  <br />
+* fix in mobile_catalogue.php: no products message added when empty category (thanks to roaddoctor)<br />
+<br />
+* fix in mobile footer and header to prevent repetition of the &quot;redirectCancelled=true&quot; parameter when toggling more then once between &quot;classic&quot; and &quot;mobile&quot; site.<br />
+<br />
+Full Package";s:7:"pubDate";s:31:"Sat, 29 Dec 2012 16:46:25 +0100";}i:2;a:4:{s:5:"title";s:34:"iOSC Mobile Version for OSC 2.3.3.";s:4:"link";s:38:"http://addons.oscommerce.com/info/8629";s:11:"description";s:2929:"See iOSC 5.3. for OSC 2.3.3. here: www.sarfotostock.com/mobile_index.php (live shop)<br />
+<br />
+Changelog v5.3:<br />
+<br />
+* Radio buttons for gender selection changed to more touchscreen friendly drop down menu in the mobile account files.<br />
+<br />
+* &quot;create account&quot; and &quot;enter account&quot; text links in mobile index changed to more touchscreen friendly buttons.<br />
+<br />
+* Layout changes in mobile shopping cart: &quot;remove&quot; text link replaced with more touchscreen friendly button.<br />
+<br />
+* mobile checkout shipping and payment:<br />
+  a. shipping and payment method radio buttons changed to more touchscreen friendly big selection areas like the category selector in mobile catalogue.<br />
+  b. text link &quot;change address&quot; replaced by more touch screen friendly big selection area.<br />
+  c. fix for non registering comments.<br />
+  d. &quot;back&quot; and &quot;continue&quot; buttons placed at the bottom of the page.<br />
+  <br />
+* mobile checkout shipping and payment address:<br />
+  a. radio buttons for address selection replaced by more touchscreen friendly auto-update drop down menus.<br />
+  b. radio buttons for gender selection changed to more touchscreen friendly drop down menu in the new address section.<br />
+  c. new mobile_checkout_new_address.php file added to match the mobile layout.<br />
+  <br />
+* in mobile checkout confirmation:<br />
+  a. Additional payment description moved from the top of the page below the payment method.<br />
+  b. Fix for missing comments.<br />
+  c. Text links &quot;change&quot; replaced by more touch screen friendly buttons.<br />
+  d. &quot;back&quot; and &quot;continue&quot; buttons placed at the bottom of the page.<br />
+<br />
+* Fix in installation instructions: Step 8. removed (not necessary for OSC 2.3.x) (thanks to chelle40)<br />
+  <br />
+* Fix in mobile checkout payment: missing javascript_validation. (thanks to Bernhard Bauer)<br />
+<br />
+* Fix for missing image alt text in mobile product info. (thanks to Bernhard Bauer)<br />
+<br />
+* Fix for sql query: &quot;null&quot; replaced with '' in the set function entry for some configuration settings. (thanks to Davelaar)<br />
+<br />
+* fix to avoid Chrome or IE's  &quot;Confirm Form Resubmission&quot; message when jumping back from mobile_checkout_payment.php to mobile_checkout_shipping.php<br />
+<br />
+* html tags rewritten in mobile header for better validation (thanks to roaddoctor)<br />
+  &lt;&quot;noindex, nofollow&quot;&gt; tags removed and added only to checkout pages<br />
+  <br />
+* fix in mobile_catalogue.php: no products message added when empty category (thanks to roaddoctor)<br />
+<br />
+* fix in mobile footer and header to prevent repetition of the &quot;redirectCancelled=true&quot; parameter when toggling more then once between &quot;classic&quot; and &quot;mobile&quot; site.<br />
+<br />
+<br />
+Full Package<br />";s:7:"pubDate";s:31:"Sat, 29 Dec 2012 16:42:29 +0100";}i:3;a:4:{s:5:"title";s:38:"My Account Info Box for osCommerce 2.3";s:4:"link";s:38:"http://addons.oscommerce.com/info/8668";s:11:"description";s:376:"When a customer is logged  in to their account this provides a simple info box with links to access the various things they might want to edit in their account. This should make it easier for the customer to find how to edit their account information rather than making them go to the My Account page first. The box ONLY appears if the customer has logged in to their account.";s:7:"pubDate";s:31:"Fri, 28 Dec 2012 22:36:37 +0100";}i:4;a:4:{s:5:"title";s:11:"NextPromote";s:4:"link";s:38:"http://addons.oscommerce.com/info/8633";s:11:"description";s:43:"Friendly URL support added. NextPromote.com";s:7:"pubDate";s:31:"Fri, 28 Dec 2012 14:56:11 +0100";}}s:11:"items_count";i:5;}
