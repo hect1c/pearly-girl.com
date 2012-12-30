@@ -1481,4 +1481,101 @@
       return is_writable($file);
     }
   }
+
+
+  // bof Dynamic Template System
+//// Return an array of the catalog directory. mechanism for reading this.  
+  function tep_list_catalog_files () {
+    $d = dir(DIR_FS_CATALOG);
+    $result = array();   
+    $exclude = array('redirect.php', 'popup_search_help.php', 'popup_image.php', 'opensearch.php', 'info_shopping_cart.php', 'download.php', 'checkout_process.php');
+      while (false !== ($file = $d->read())) {
+        if($file != '.' && $file != '..' && !is_dir($file) && (substr($file, -3, 3) == 'php') && !in_array($file, $exclude)) {  
+            $result[] = $file;
+        }
+    }    
+    $d->close();    
+    return $result;
+  }
+  
+////
+// Alias function for module [boxes] configuration value
+  function tep_cfg_select_pages($key_value, $key = '') {
+    $name = ((tep_not_null($key)) ? 'configuration[' . $key . '][]' : 'configuration_value');
+    $select_array = tep_list_catalog_files();    
+    $selected_array = explode(';', $key_value);
+    if($key_value === 'null') { $checkall = "UNCHECKED"; $checkany = "CHECKED";}
+    if($key_value === 'all') { $checkall = "CHECKED"; $checkany = "UNCHECKED";} 
+      $string = '<fieldset>';    
+      $string .= '<input type="radio" class="AllPages"  name="' . $name . '" value="all" ' . $checkall . ' />' . ALL_PAGES . '<br />';
+      $string .= '<input type="radio" class="AnyPages"  name="' . $name . '" value="null" ' . $checkany . ' />' . ANY_PAGES . '<br />';
+      $string .= '<br /><strong>&nbsp;&nbsp;' . ONE_BY_ONE . '</strong><br /><br />';    
+      for ($i=0, $n=sizeof($select_array); $i<$n; $i++) {        
+      $string .= '&nbsp;&nbsp;<input type="checkbox" class="ThisPage" name="' . $name . '" value="' . $select_array[$i] . ';"';
+          if(isset($selected_array))
+            {                      
+            foreach($selected_array as $value){            
+               if ($select_array[$i] == $value) $string .= ' CHECKED';
+               }
+            }
+      $string .= '>' . $select_array[$i] . '<br />';
+      }      
+      $string .= '</fieldset>';
+      $string .= "<script type=\"text/javascript\">   
+                  jQuery(document).ready(function () {
+                  if($(\".AnyPages\").attr('checked') == true)
+                  $('input[regex(name, .*STATUS.*)][value=\"False\"]').attr('checked', true);                  
+                  $('input[regex(name, .*STATUS.*)][value=\"False\"]').bind(\"click\",
+                     function() {
+                      if($(this).attr(\"checked\") == true) {
+                      $(\".AnyPages\").attr('checked', true);
+                      $(\".ThisPage\").attr('checked', false); 
+                      }
+                      });
+                   $('input[regex(name, .*STATUS.*)][value=\"True\"]').bind(\"click\",
+                     function() {
+                      if($(this).attr(\"checked\") == true) {
+                      $(\".AllPages\").attr('checked', true);
+                      }
+                      });    
+                      $(\".AllPages\").click(
+                          function() {               
+                              $(this).parents('fieldset:eq(0)').find('.ThisPage').attr('checked', false);
+                              $(this).parents('fieldset:eq(0)').find('.AnyPages').attr('checked', false);
+                              $('input[regex(name, .*STATUS.*)][value=\"True\"]').attr('checked', true);               
+                          }
+                      );
+                      $(\".AnyPages\").click(
+                          function() {               
+                              $(this).parents('fieldset:eq(0)').find('.ThisPage').attr('checked', false);
+                              $(this).parents('fieldset:eq(0)').find('.AllPages').attr('checked', false);
+                              $('input[regex(name, .*STATUS.*)][value=\"False\"]').attr('checked', true);
+                          }
+                      );                                              
+                      $('.ThisPage').click(
+                          function() {
+                              if ($(this).parents('fieldset:eq(0)').find('.AllPages').attr('checked') == true && this.checked == false)
+                                  $(this).parents('fieldset:eq(0)').find('.AllPages').attr('checked', false);
+                                  $('input[regex(name, .*STATUS.*)][value=\"True\"]').attr('checked', true); 
+                              if (this.checked == true) {
+                                  var flag = true;
+                                  var shlag = false;
+                                  $(this).parents('fieldset:eq(0)').find('.ThisPage').each(   
+                                    function() {
+                                        if (this.checked == false) {
+                                            flag = false;                                           
+                                          }
+                                    }
+                                  
+                                  );
+                                  $(this).parents('fieldset:eq(0)').find('.AllPages').attr('checked', flag);
+                                  $(this).parents('fieldset:eq(0)').find('.AnyPages').attr('checked', shlag);
+                              }
+                          }
+                      );
+                  }
+                  );</script>";
+      return $string;
+  }
+// eof Dynamic Template System   
 ?>

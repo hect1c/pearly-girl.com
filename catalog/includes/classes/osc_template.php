@@ -89,9 +89,16 @@
 
               $mb = new $class();
 
-              if ( $mb->isEnabled() ) {
+              // bof Dynamic Template System
+              if(!isset($mb->pages) && ($mb->isEnabled())){
+                $this->pages = 'all';              
+                $mb->execute();              
+                }else{              
+              if(($mb->isEnabled()) && (($mb->pages === 'all') || (in_array($PHP_SELF , explode(';' , $mb->pages))))){
                 $mb->execute();
+                }
               }
+              // eof Dynamic Template System
             }
           }
         }

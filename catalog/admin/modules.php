@@ -34,7 +34,20 @@
       case 'save':
         reset($HTTP_POST_VARS['configuration']);
         while (list($key, $value) = each($HTTP_POST_VARS['configuration'])) {
+        // bof Dynamic Template System              
+          if((is_array($value)) && (!empty($value))){
+          $pages = '';
+          $count = count($value);
+          for($i=0 ; $i<$count; $i++){
+          $pages = "$pages$value[$i]";
+          tep_db_query("update " . TABLE_CONFIGURATION . " set configuration_value = '" . $pages . "' where configuration_key = '" . $key . "'"); 
+               }
+          }
+        // eof Dynamic Template System
+          else
+          {         
           tep_db_query("update " . TABLE_CONFIGURATION . " set configuration_value = '" . $value . "' where configuration_key = '" . $key . "'");
+          }
         }
         tep_redirect(tep_href_link(FILENAME_MODULES, 'set=' . $set . '&module=' . $HTTP_GET_VARS['module']));
         break;
@@ -240,7 +253,12 @@
       $heading[] = array('text' => '<strong>' . $mInfo->title . '</strong>');
 
       $contents = array('form' => tep_draw_form('modules', FILENAME_MODULES, 'set=' . $set . '&module=' . $HTTP_GET_VARS['module'] . '&action=save'));
-      $contents[] = array('text' => $keys);
+      // bof Dynamic Template System
+      $files = explode(";", $keys);        
+      foreach($files as $file){        
+      $contents[] = array('text' =>  $file);
+      }
+      // eof Dynamic Template System
       $contents[] = array('align' => 'center', 'text' => '<br />' . tep_draw_button(IMAGE_SAVE, 'disk', null, 'primary') . tep_draw_button(IMAGE_CANCEL, 'close', tep_href_link(FILENAME_MODULES, 'set=' . $set . '&module=' . $HTTP_GET_VARS['module'])));
       break;
     default:
@@ -281,7 +299,12 @@
         }
 
         $contents[] = array('text' => '<br />' . $mInfo->description);
-        $contents[] = array('text' => '<br />' . $keys);
+        // bof Dynamic Template System
+        $files = explode(";", $keys);        
+        foreach($files as $file){        
+        $contents[] = array('text' =>  $file);
+        }
+        // eof Dynamic Template System
       } elseif (isset($HTTP_GET_VARS['list']) && ($HTTP_GET_VARS['list'] == 'new')) {
         if (isset($mInfo)) {
           $contents[] = array('align' => 'center', 'text' => tep_draw_button(IMAGE_MODULE_INSTALL, 'plus', tep_href_link(FILENAME_MODULES, 'set=' . $set . '&module=' . $mInfo->code . '&action=install')));
