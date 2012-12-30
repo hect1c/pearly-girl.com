@@ -297,6 +297,6 @@ define('SUCCESS_FILE_SAVED_SUCCESSFULLY', 'Success: File upload saved successful
 define('WARNING_NO_FILE_UPLOADED', 'Warning: No file uploaded.');
 
 define('ALL_PAGES', 'all pages.');
-define('ANY_PAGES', 'any page.');
+define('ANY_PAGES', 'no page.');
 define('ONE_BY_ONE', 'or select one by one :');
 ?>
