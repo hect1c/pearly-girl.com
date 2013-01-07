@@ -4,7 +4,7 @@ html {
 	padding: 0;
 }
 body {
-	background-color: #ffffff;
+	background: #ffffff url('../image/gray_jean.png') repeat;
 	color: #000000;
 	font-family: Arial, Helvetica, sans-serif;
 	margin: 0px;
@@ -88,6 +88,145 @@ label {
 #column-right + #content {
 	margin-right: 195px;
 }
+
+/* Quick Menu */
+#quick-menu-bg {
+	background-image: url('../image/top-bg1.png');
+  	background-repeat:repeat-x;
+  	background-position:50% 0;
+  	height:35px;
+  	box-shadow:rgba(0, 0, 0, 0.156863) 0 2px 7px;
+	width:100%;
+	-webkit-box-shadow:rgba(0, 0, 0, 0.156863) 0 2px 7px;
+}
+
+#quick-menu-content {
+	margin:auto;
+	width:980px;
+}
+
+#quick-menu-bg .links a {
+	float: left;
+	display: inline-block;
+	margin-top: 10px;
+	padding: 0px 0px 0px 7px;
+	color: white;
+	font-weight: bold;
+	font-size: 13px;
+	text-decoration: none;
+}
+
+#quick-menu-bg .links a:hover{
+	color: orange;
+}
+
+#quick-menu-bg .links a + a {
+	margin-left: 8px;
+	border-left: 1px solid gray;
+}
+
+#currency{
+  	float:right;
+  	width: 125px;
+  	margin-top: 5px;
+}
+
+#currency-switcher{
+  	display: block;
+	background-color:#F6F6F6;
+	background-image:url(http://shoppica2.com/catalog/view/theme/shoppica2/images/dropdown.gif);
+  	background-position:100% 6px;
+  	background-repeat:no-repeat no-repeat;
+  	border-bottom-left-radius:3px;
+  	border-bottom-right-radius:3px;
+  	border-color:#E9E9E9 #F6F6F6 #F6F6F6 #E9E9E9;
+  	border-style:solid;
+  	border-top-left-radius:3px;
+  	border-top-right-radius:3px;
+  	border-width:1px;
+  	padding-right:22px;
+}
+
+#currency-switcher ul {
+	text-align:left;
+	font-size: 12px;
+	list-style: none;
+}
+
+#currency-switcher ul:hover li{
+	display: block;
+	-webkit-transition: all 500s ease;
+	-moz-transition: all 500s ease;
+	-ms-transition: all 500s ease;
+	-o-transition: all 500s ease;
+	transition: all 500s ease;
+}
+
+#currency-switcher a:hover{
+	color: orange;
+}
+
+#currency-switcher li {
+	display: none; /* hides the nested list by default */
+	margin: 5px; /* repositions the nested list */
+}
+
+#currency-switcher li.first{
+	display: inline-block;
+	margin: 5px;
+}
+
+#currency-switcher li a{
+	text-decoration: none;
+	padding: 3px 0 0 0;
+}
+
+/*#currency-switcher > ul > li {
+  float: left;
+}
+
+#currency-switcher ul{
+	font-size:11px;
+}
+
+#currency-switcher li:hover{
+	display: block;
+}
+
+#currency a {
+}
+
+#currency a b {
+	float: right;
+	color: #000;
+	text-decoration: none;
+}
+
+/*
+
+background-color:#F6F6F6;
+  background-image:url(http://shoppica2.com/catalog/view/theme/shoppica2/images/dropdown.gif);
+  background-position:100% 6px;
+  background-repeat:no-repeat no-repeat;
+  border-bottom-left-radius:3px;
+  border-bottom-right-radius:3px;
+  border-color:#E9E9E9 #F6F6F6 #F6F6F6 #E9E9E9;
+  border-style:solid;
+  border-top-left-radius:3px;
+  border-top-right-radius:3px;
+  border-width:1px;
+  font-size:11px;
+  padding-right:22px;
+  position:absolute;
+  text-align:left;
+  z-index:10;
+
+{
+    background-image:url('../image/bg-top-bar.png');
+	background-position:initial initial;
+	background-repeat:repeat no-repeat;
+}
+
 /* header */
 #header {
 	height: 90px;
@@ -101,6 +240,7 @@ label {
 	top: 25px;
 	left: 15px;
 }
+
 #language {
 	position: absolute;
 	top: 15px;
@@ -113,27 +253,9 @@ label {
 	cursor: pointer;
 	margin-right: 5px;
 }
-#currency {
-	width: 75px;
-	position: absolute;
-	top: 15px;
-	left: 425px;
-	color: #999;
-	line-height: 17px;
-}
-#currency a {
-	display: inline-block;
-	padding: 2px 4px;
-	border: 1px solid #CCC;
-	color: #999;
-	text-decoration: none;
-	margin-right: 2px;
-	margin-bottom: 2px;
-}
-#currency a b {
-	color: #000;
-	text-decoration: none;
-}
+
+
+
 #header #cart {
 	position: absolute;
 	top: 0px;
@@ -296,25 +418,7 @@ label {
 	text-align: right;
 	color: #999999;
 }
-#header .links {
-	position: absolute;
-	right: 0px;
-	bottom: 3px;
-	font-size: 10px;
-	padding-right: 10px;
-}
-#header .links a {
-	float: left;
-	display: block;
-	padding: 0px 0px 0px 7px;
-	color: #38B0E3;
-	text-decoration: none;
-	font-size: 12px;
-}
-#header .links a + a {
-	margin-left: 8px;
-	border-left: 1px solid #CCC;
-}
+
 /* menu */
 #menu {
 	background: #585858;
