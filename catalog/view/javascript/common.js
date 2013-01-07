@@ -25,6 +25,11 @@ $(document).ready(function() {
 			location = url;
 		}
 	});
+
+	/* Quick Menu */
+    $('#quick-menu').scrollToFixed(
+    	
+    );
 	
 	/* Ajax Cart */
 	$('#cart > .heading a').live('click', function() {
