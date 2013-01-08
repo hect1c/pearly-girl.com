@@ -57,8 +57,10 @@ DD_belatedPNG.fix('#logo img');
       </div>
       <!-- Currency Container -->
       <?php echo $currency; ?>
+      <!-- Shopping Cart Container -->
+      <?php echo $cart; ?>
+
     </div>
-    <div style="clear: both;"></div>
   </div>
 </div>
 
@@ -69,7 +71,6 @@ DD_belatedPNG.fix('#logo img');
     <div id="logo"><a href="<?php echo $home; ?>"><img src="<?php echo $logo; ?>" title="<?php echo $name; ?>" alt="<?php echo $name; ?>" /></a></div>
     <?php } ?>
     <?php echo $language; ?>
-    <?php echo $cart; ?>
     <div id="search">
       <div class="button-search"></div>
       <?php if ($filter_name) { ?>

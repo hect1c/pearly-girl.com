@@ -27,12 +27,10 @@ $(document).ready(function() {
 	});
 
 	/* Quick Menu */
-    $('#quick-menu').scrollToFixed(
-    	
-    );
+    $('#quick-menu').scrollToFixed();
 	
 	/* Ajax Cart */
-	$('#cart > .heading a').live('click', function() {
+	$('#cart > .heading a').live('hover', function() {
 		$('#cart').addClass('active');
 		
 		$('#cart').load('index.php?route=module/cart #cart > *');

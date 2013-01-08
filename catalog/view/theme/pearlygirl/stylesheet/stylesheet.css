@@ -96,13 +96,14 @@ label {
  * the top of the page
  */
 #quick-menu {
+	display: inline-block;
+	width: 100%;
 }
 
 #quick-menu-bg {
 	background-image: url('../image/top-bg.png');
   	background-repeat:repeat-x;
   	background-position:50% 0;
-  	height:35px;
   	box-shadow:rgba(0, 0, 0, 0.156863) 0 4px 7px;
 	width:100%;
 	-webkit-box-shadow:rgba(0, 0, 0, 0.156863) 0 4px 7px;
@@ -112,12 +113,17 @@ label {
 #quick-menu-content {
 	margin:auto;
 	width:980px;
+	height: 35px;
+}
+
+#quick-menu-bg .links{
+	float: left;
+	width: 66%;
+	padding-top: 15px;
 }
 
 #quick-menu-bg .links a {
-	float: left;
 	display: inline-block;
-	margin-top: 15px;
 	padding: 0px 0px 0px 7px;
 	color: white;
 	font-weight: bold;
@@ -126,7 +132,7 @@ label {
 }
 
 #quick-menu-bg .links a:hover{
-	color: brown;
+	color: #802a2a;
 }
 
 #quick-menu-bg .links a + a {
@@ -136,9 +142,12 @@ label {
 
 /* Currency Display */
 #quick-menu #currency{
-  	float:right;
-  	width: 125px;
+	display: inline-block;
+  	width: 120px;
   	margin-top: 10px;
+  	position: absolute;
+  	z-index: 8;
+  	margin-left: 35px;
 }
 
 #quick-menu #currency-switcher{
@@ -164,7 +173,7 @@ label {
 }
 
 #quick-menu #currency-switcher ul:hover li{
-	display: block;
+	display: inline-block;
 	-webkit-transition: all 500s ease;
 	-moz-transition: all 500s ease;
 	-ms-transition: all 500s ease;
@@ -173,7 +182,7 @@ label {
 }
 
 #quick-menu #currency-switcher a:hover{
-	color: brown;
+	color: #802a2a;
 }
 
 #quick-menu #currency-switcher li {
@@ -193,40 +202,41 @@ label {
 
 /* Cart */
 #quick-menu #cart {
+	width: 400px;
+	display: inline-block;
 	position: absolute;
-	top: 0px;
-	right: 145px;
-	z-index: 9;
-	min-width: 300px;
+	z-index: 5;
 }
+
 #quick-menu #cart .heading {
-	float: right;
-	margin-right: 172px;
-	margin-top: 15px;
-	padding-left: 14px;
-	padding-right: 14px;
-	border-top: 1px solid #FFFFFF;
-	border-left: 1px solid #FFFFFF;
-	border-right: 1px solid #EEEEEE;
-	background: #FFF;
-	position: relative;
+	margin-left: 165px;
 	z-index: 1;
+	padding-right: 10px;
 }
-#quick-menu #cart .heading h4 {
-	color: #333333;
+
+#quick-menu .shopping-cart{
+	vertical-align: middle;
+}
+
+#quick-menu img.shopping-cart{
+	width: 48px;
+	height: 48px;
+}
+
+#quick-menu #cart .heading a {
+	color: #802a2a;
 	font-size: 15px;
 	font-weight: bold;
-	margin-top: 0px;
-	margin-bottom: 3px;
-}
-#quick-menu #cart .heading a {
-	color: #38B0E3;
 	text-decoration: none;
+    font-family:'ProclamateHeavy', "Times New Roman", Times, serif;
 }
+
 #quick-menu #cart .heading a span {
-	background: #FFFFFF url('../image/arrow-down.png') 100% 50% no-repeat;
+	background: url('../image/arrow-down.png') 100% 50% no-repeat;
 	padding-right: 15px;
+	margin-bottom: 20px;
 }
+
 #quick-menu #cart .content {
 	clear: both;
 	display: none;
@@ -234,34 +244,30 @@ label {
 	top: -1px;
 	padding: 8px;
 	min-height: 150px;
-	border-top: 1px solid #EEEEEE;
-	border-left: 1px solid #EEEEEE;
-	border-right: 1px solid #EEEEEE;
+	margin-right: 65px;
 	border-bottom: 1px solid #EEEEEE;
-	-webkit-border-radius: 0px 7px 7px 7px;
-	-moz-border-radius: 0px 7px 7px 7px;
+	-webkit-border-radius: 7px 0px 7px 7px;
+	-moz-border-radius: 7px 0px 7px 7px;
 	-khtml-border-radius: 0px 7px 7px 7px;
-	border-radius: 0px 7px 7px 7px;
+	border-radius: 7px 0px 7px 7px;
 	-webkit-box-shadow: 0px 2px 2px #DDDDDD;
 	-moz-box-shadow: 0px 2px 2px #DDDDDD;
 	box-shadow: 0px 2px 2px #DDDDDD;
 	background: #FFF;
 }
+
 #quick-menu #cart.active .heading {
-	margin-top: 5px;
-	padding-top: 10px;
-	padding-bottom: 6px;
-	border-top: 1px solid #EEEEEE;
-	border-left: 1px solid #EEEEEE;
-	border-right: 1px solid #EEEEEE;
 	-webkit-border-radius: 7px 7px 0px 0px;
 	-moz-border-radius: 7px 7px 0px 0px;
 	-khtml-border-radius: 7px 7px 0px 0px;
 	border-radius: 7px 7px 0px 0px;
 }
+
 #quick-menu #cart.active .content {
 	display: block;
+	color: #802a2a;
 }
+
 .mini-cart-info table {
 	border-collapse: collapse;
 	width: 100%;
@@ -1489,6 +1495,7 @@ a.button:hover, input.button:hover {
 .download-list .download-info {
 	text-align: right;
 }
+
 /* cart */
 .cart-info table {
 	width: 100%;
