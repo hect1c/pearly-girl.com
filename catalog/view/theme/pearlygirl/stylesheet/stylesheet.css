@@ -33,7 +33,7 @@ p {
 	margin-bottom: 20px;
 }
 a, a:visited, a b {
-	color: #38B0E3;
+	color: #87A6C3;
 	text-decoration: underline;
 	cursor: pointer;
 }
@@ -89,15 +89,24 @@ label {
 	margin-right: 195px;
 }
 
-/* Quick Menu */
+/* 
+ * Quick Menu Elements
+ *
+ * The following elements affect the quick menu bar on
+ * the top of the page
+ */
+#quick-menu {
+}
+
 #quick-menu-bg {
-	background-image: url('../image/top-bg1.png');
+	background-image: url('../image/top-bg.png');
   	background-repeat:repeat-x;
   	background-position:50% 0;
   	height:35px;
-  	box-shadow:rgba(0, 0, 0, 0.156863) 0 2px 7px;
+  	box-shadow:rgba(0, 0, 0, 0.156863) 0 4px 7px;
 	width:100%;
-	-webkit-box-shadow:rgba(0, 0, 0, 0.156863) 0 2px 7px;
+	-webkit-box-shadow:rgba(0, 0, 0, 0.156863) 0 4px 7px;
+	padding-bottom: 8px;
 }
 
 #quick-menu-content {
@@ -108,7 +117,7 @@ label {
 #quick-menu-bg .links a {
 	float: left;
 	display: inline-block;
-	margin-top: 10px;
+	margin-top: 15px;
 	padding: 0px 0px 0px 7px;
 	color: white;
 	font-weight: bold;
@@ -117,7 +126,7 @@ label {
 }
 
 #quick-menu-bg .links a:hover{
-	color: orange;
+	color: brown;
 }
 
 #quick-menu-bg .links a + a {
@@ -125,16 +134,17 @@ label {
 	border-left: 1px solid gray;
 }
 
-#currency{
+/* Currency Display */
+#quick-menu #currency{
   	float:right;
   	width: 125px;
-  	margin-top: 5px;
+  	margin-top: 10px;
 }
 
-#currency-switcher{
+#quick-menu #currency-switcher{
   	display: block;
 	background-color:#F6F6F6;
-	background-image:url(http://shoppica2.com/catalog/view/theme/shoppica2/images/dropdown.gif);
+	background-image:url('../image/dropdown.gif');
   	background-position:100% 6px;
   	background-repeat:no-repeat no-repeat;
   	border-bottom-left-radius:3px;
@@ -147,13 +157,13 @@ label {
   	padding-right:22px;
 }
 
-#currency-switcher ul {
+#quick-menu #currency-switcher ul {
 	text-align:left;
 	font-size: 12px;
 	list-style: none;
 }
 
-#currency-switcher ul:hover li{
+#quick-menu #currency-switcher ul:hover li{
 	display: block;
 	-webkit-transition: all 500s ease;
 	-moz-transition: all 500s ease;
@@ -162,108 +172,34 @@ label {
 	transition: all 500s ease;
 }
 
-#currency-switcher a:hover{
-	color: orange;
+#quick-menu #currency-switcher a:hover{
+	color: brown;
 }
 
-#currency-switcher li {
+#quick-menu #currency-switcher li {
 	display: none; /* hides the nested list by default */
 	margin: 5px; /* repositions the nested list */
 }
 
-#currency-switcher li.first{
+#quick-menu #currency-switcher li.first{
 	display: inline-block;
 	margin: 5px;
 }
 
-#currency-switcher li a{
+#quick-menu #currency-switcher li a{
 	text-decoration: none;
 	padding: 3px 0 0 0;
 }
 
-/*#currency-switcher > ul > li {
-  float: left;
-}
-
-#currency-switcher ul{
-	font-size:11px;
-}
-
-#currency-switcher li:hover{
-	display: block;
-}
-
-#currency a {
-}
-
-#currency a b {
-	float: right;
-	color: #000;
-	text-decoration: none;
-}
-
-/*
-
-background-color:#F6F6F6;
-  background-image:url(http://shoppica2.com/catalog/view/theme/shoppica2/images/dropdown.gif);
-  background-position:100% 6px;
-  background-repeat:no-repeat no-repeat;
-  border-bottom-left-radius:3px;
-  border-bottom-right-radius:3px;
-  border-color:#E9E9E9 #F6F6F6 #F6F6F6 #E9E9E9;
-  border-style:solid;
-  border-top-left-radius:3px;
-  border-top-right-radius:3px;
-  border-width:1px;
-  font-size:11px;
-  padding-right:22px;
-  position:absolute;
-  text-align:left;
-  z-index:10;
-
-{
-    background-image:url('../image/bg-top-bar.png');
-	background-position:initial initial;
-	background-repeat:repeat no-repeat;
-}
-
-/* header */
-#header {
-	height: 90px;
-	margin-bottom: 7px;
-	padding-bottom: 4px;
-	position: relative;
-	z-index: 99;
-}
-#header #logo {
-	position: absolute;
-	top: 25px;
-	left: 15px;
-}
-
-#language {
-	position: absolute;
-	top: 15px;
-	left: 320px;
-	width: 80px;
-	color: #999;
-	line-height: 17px;
-}
-#language img {
-	cursor: pointer;
-	margin-right: 5px;
-}
-
-
-
-#header #cart {
+/* Cart */
+#quick-menu #cart {
 	position: absolute;
 	top: 0px;
 	right: 145px;
 	z-index: 9;
 	min-width: 300px;
 }
-#header #cart .heading {
+#quick-menu #cart .heading {
 	float: right;
 	margin-right: 172px;
 	margin-top: 15px;
@@ -276,22 +212,22 @@ background-color:#F6F6F6;
 	position: relative;
 	z-index: 1;
 }
-#header #cart .heading h4 {
+#quick-menu #cart .heading h4 {
 	color: #333333;
 	font-size: 15px;
 	font-weight: bold;
 	margin-top: 0px;
 	margin-bottom: 3px;
 }
-#header #cart .heading a {
+#quick-menu #cart .heading a {
 	color: #38B0E3;
 	text-decoration: none;
 }
-#header #cart .heading a span {
+#quick-menu #cart .heading a span {
 	background: #FFFFFF url('../image/arrow-down.png') 100% 50% no-repeat;
 	padding-right: 15px;
 }
-#header #cart .content {
+#quick-menu #cart .content {
 	clear: both;
 	display: none;
 	position: relative;
@@ -311,7 +247,7 @@ background-color:#F6F6F6;
 	box-shadow: 0px 2px 2px #DDDDDD;
 	background: #FFF;
 }
-#header #cart.active .heading {
+#quick-menu #cart.active .heading {
 	margin-top: 5px;
 	padding-top: 10px;
 	padding-bottom: 6px;
@@ -323,7 +259,7 @@ background-color:#F6F6F6;
 	-khtml-border-radius: 7px 7px 0px 0px;
 	border-radius: 7px 7px 0px 0px;
 }
-#header #cart.active .content {
+#quick-menu #cart.active .content {
 	display: block;
 }
 .mini-cart-info table {
@@ -371,14 +307,42 @@ background-color:#F6F6F6;
 	color: #000;
 	padding: 4px;
 }
-#header #cart .checkout {
+#quick-menu #cart .checkout {
 	text-align: right;
 	clear: both;
 }
-#header #cart .empty {
+#quick-menu #cart .empty {
 	padding-top: 50px;
 	text-align: center;
 }
+
+/* header */
+#header {
+	height: 90px;
+	margin-bottom: 7px;
+	padding-bottom: 4px;
+	position: relative;
+	z-index: 99;
+}
+#header #logo {
+	position: absolute;
+	top: 25px;
+	left: 15px;
+}
+
+#language {
+	position: absolute;
+	top: 15px;
+	left: 320px;
+	width: 80px;
+	color: #999;
+	line-height: 17px;
+}
+#language img {
+	cursor: pointer;
+	margin-right: 5px;
+}
+
 #header #search {
 	position: absolute;
 	top: 15px;
