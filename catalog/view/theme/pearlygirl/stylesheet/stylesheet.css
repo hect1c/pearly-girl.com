@@ -2,12 +2,14 @@ html {
 	overflow: -moz-scrollbars-vertical;
 	margin: 0;
 	padding: 0;
+	height: 100%;
 }
 body {
 	background: #ffffff url('../image/gray_jean.png') repeat;
 	color: #000000;
 	font-family: Arial, Helvetica, sans-serif;
 	margin: 0px;
+	height: 100%;
 	padding: 0px;
 }
 body, td, th, input, textarea, select, a {
@@ -65,11 +67,19 @@ label {
 }
 /* layout */
 #container {
-	width: 980px;
+	min-height: 100%;
 	margin-left: auto;
 	margin-right: auto;
 	text-align: left;
 }
+
+.wrapper{
+	width: 980px;
+	text-align: left;
+	margin:auto;
+	position:relative;
+}
+
 #column-left {
 	float: left;
 	width: 180px;
@@ -79,8 +89,7 @@ label {
 	width: 180px;
 }
 #content {
-	min-height: 400px;
-	margin-bottom: 25px;
+	min-height: 100%;
 }
 #column-left + #column-right + #content, #column-left + #content {
 	margin-left: 195px;
@@ -324,12 +333,17 @@ label {
 
 /* header */
 #header {
-	height: 90px;
-	margin-bottom: 7px;
-	padding-bottom: 4px;
-	position: relative;
-	z-index: 99;
+  	height:115px;
+  	-webkit-box-shadow:rgba(0, 0, 0, 0.2) 0 0 8px;
+	background-color:#FFFFFF;
+	background-position:initial initial;
+	background-repeat:initial initial;
+	border-color:#999999;
+	box-shadow:rgba(0, 0, 0, 0.14902) 0 0 8px;
+	color:#333333;
+	margin-bottom:20px;
 }
+
 #header #logo {
 	position: absolute;
 	top: 25px;
@@ -351,7 +365,7 @@ label {
 
 #header #search {
 	position: absolute;
-	top: 15px;
+	top: 76px;
 	right: 0px;
 	width: 298px;
 	z-index: 15;
@@ -388,6 +402,21 @@ label {
 	text-align: right;
 	color: #999999;
 }
+
+/* main_content */
+#main_content{
+	-webkit-box-shadow:rgba(0, 0, 0, 0.2) 0 0 8px;
+	background-color:#FFFFFF;
+	background-position:initial initial;
+	background-repeat:initial initial;
+	border-color:#999999;
+	box-shadow:rgba(0, 0, 0, 0.14902) 0 0 8px;
+	color:#333333;
+	margin-top:20px;
+	height: 100%;
+}
+
+#wrap {min-height: 100%;}
 
 /* menu */
 #menu {
@@ -838,6 +867,7 @@ a.button:hover, input.button:hover {
 	overflow: auto;
 	margin-bottom: 20px;
 	border: 1px solid #EEEEEE;
+	min-height: 100%;
 }
 #content .content .left {
 	float: left;
@@ -1658,14 +1688,30 @@ a.button:hover, input.button:hover {
 }
 /* footer */ 
 #footer {
-	clear: both;
-	overflow: auto;
-	min-height: 100px;
-	padding: 20px;
-	border-top: 1px solid #DBDEE1;
-	border-bottom: 1px solid #DBDEE1;
-	background: #F8F8F8;
+	/*height: 100px;
+	background-image: url('../image/top-bg.png');
+  	background-repeat:repeat-x;
+  	background-position:50% 0;
+  	box-shadow:rgba(0, 0, 0, 0.156863) 0 4px 7px;
+	width:100%;
+	-webkit-box-shadow:rgba(0, 0, 0, 0.156863) 0 4px 7px;
+	, url('../image/bottom-bg2.png') repeat
+	*/
+	background-color: #93b5da;
+	background: #93b5da url(http://www.saelstrom.com/themes/saelstrom/images/footer_shadow.png) no-repeat;
+  	background-position:50% 0;
+  	overflow:hidden;
+  	padding:40px 0 10px;
+  	width:auto;
+  	height: 100px;
+  	position: relative;
+	clear:both;
+	-moz-box-shadow: inset 0 0 10px #888;
+	-webkit-box-shadow: inset 0 0 10px#888;
+	box-shadow: inner 0 0 10px #888;
 }
+
+
 #footer h3 {
 	color: #000000;
 	font-size: 14px;
