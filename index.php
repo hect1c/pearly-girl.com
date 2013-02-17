@@ -1,10 +1,35 @@
 <?php
+
+/* ---------------------------------------------------------------------------------- */
+/*  OpenCart index.php (with modififications for the override feature)                */
+/*                                                                                    */
+/*  Original file Copyright © 2012 by Daniel Kerr (www.opencart.com)                  */
+/*  Modifications Copyright © 2012 by J.Neuhoff (www.mhccorp.com)                     */
+/*                                                                                    */
+/*  This file is part of OpenCart.                                                    */
+/*                                                                                    */
+/*  OpenCart is free software: you can redistribute it and/or modify                  */
+/*  it under the terms of the GNU General Public License as published by              */
+/*  the Free Software Foundation, either version 3 of the License, or                 */
+/*  (at your option) any later version.                                               */
+/*                                                                                    */
+/*  OpenCart is distributed in the hope that it will be useful,                       */
+/*  but WITHOUT ANY WARRANTY; without even the implied warranty of                    */
+/*  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the                     */
+/*  GNU General Public License for more details.                                      */
+/*                                                                                    */
+/*  You should have received a copy of the GNU General Public License                 */
+/*  along with OpenCart.  If not, see <http://www.gnu.org/licenses/>.                 */
+/* ---------------------------------------------------------------------------------- */
+
 // Version
-define('VERSION', '1.5.4');
+define('VERSION', '1.5.5');
 
 // Configuration
-require_once('config.php');
-   
+if (file_exists('config.php')) {
+	require_once('config.php');
+}  
+
 // Install 
 if (!defined('DIR_APPLICATION')) {
 	header('Location: install/index.php');
@@ -30,12 +55,16 @@ $registry = new Registry();
 $loader = new Loader($registry);
 $registry->set('load', $loader);
 
+// Factory
+$factory = new Factory($registry);
+$registry->set( 'factory', $factory );
+
 // Config
-$config = new Config();
+$config = $factory->newConfig();
 $registry->set('config', $config);
 
 // Database 
-$db = new DB(DB_DRIVER, DB_HOSTNAME, DB_USERNAME, DB_PASSWORD, DB_DATABASE);
+$db = $factory->newDB( DB_DRIVER,DB_HOSTNAME,DB_USERNAME,DB_PASSWORD,DB_DATABASE );
 $registry->set('db', $db);
 
 // Store
@@ -68,11 +97,11 @@ if (!$store_query->num_rows) {
 }
 
 // Url
-$url = new Url($config->get('config_url'), $config->get('config_use_ssl') ? $config->get('config_ssl') : $config->get('config_url'));	
+$url = $factory->newUrl( $config->get('config_url'), $config->get('config_secure') ? $config->get('config_ssl') : $config->get('config_url') );
 $registry->set('url', $url);
 
 // Log 
-$log = new Log($config->get('config_error_filename'));
+$log = $factory->newLog($config->get('config_error_filename'));
 $registry->set('log', $log);
 
 function error_handler($errno, $errstr, $errfile, $errline) {
@@ -106,32 +135,32 @@ function error_handler($errno, $errstr, $errfile, $errline) {
 
 	return true;
 }
-	
+
 // Error Handler
 set_error_handler('error_handler');
 
 // Request
-$request = new Request();
+$request = $factory->newRequest();
 $registry->set('request', $request);
- 
+
 // Response
-$response = new Response();
+$response = $factory->newResponse();
 $response->addHeader('Content-Type: text/html; charset=utf-8');
 $response->setCompression($config->get('config_compression'));
 $registry->set('response', $response); 
-		
+
 // Cache
-$cache = new Cache();
+$cache = $factory->newCache();
 $registry->set('cache', $cache); 
 
 // Session
-$session = new Session();
+$session = $factory->newSession();
 $registry->set('session', $session); 
 
 // Language Detection
 $languages = array();
 
-$query = $db->query("SELECT * FROM " . DB_PREFIX . "language WHERE status = '1'"); 
+$query = $db->query("SELECT * FROM `" . DB_PREFIX . "language` WHERE status = '1'"); 
 
 foreach ($query->rows as $result) {
 	$languages[$result['code']] = $result;
@@ -139,7 +168,7 @@ foreach ($query->rows as $result) {
 
 $detect = '';
 
-if (isset($request->server['HTTP_ACCEPT_LANGUAGE']) && ($request->server['HTTP_ACCEPT_LANGUAGE'])) { 
+if (isset($request->server['HTTP_ACCEPT_LANGUAGE']) && $request->server['HTTP_ACCEPT_LANGUAGE']) { 
 	$browser_languages = explode(',', $request->server['HTTP_ACCEPT_LANGUAGE']);
 	
 	foreach ($browser_languages as $browser_language) {
@@ -177,59 +206,59 @@ $config->set('config_language_id', $languages[$code]['language_id']);
 $config->set('config_language', $languages[$code]['code']);
 
 // Language	
-$language = new Language($languages[$code]['directory']);
+$language = $factory->newLanguage($languages[$code]['directory']);
 $language->load($languages[$code]['filename']);	
 $registry->set('language', $language); 
 
 // Document
-$registry->set('document', new Document()); 		
+$registry->set('document', $factory->newDocument()); 		
 
 // Customer
-$registry->set('customer', new Customer($registry));
+$registry->set('customer', $factory->newCustomer($registry));
 
 // Affiliate
-$registry->set('affiliate', new Affiliate($registry));
+$registry->set('affiliate', $factory->newAffiliate($registry));
 
-if (isset($request->get['tracking']) && !isset($request->cookie['tracking'])) {
+if (isset($request->get['tracking'])) {
 	setcookie('tracking', $request->get['tracking'], time() + 3600 * 24 * 1000, '/');
 }
 		
 // Currency
-$registry->set('currency', new Currency($registry));
+$registry->set('currency', $factory->newCurrency($registry));
 
 // Tax
-$registry->set('tax', new Tax($registry));
+$registry->set('tax', $factory->newTax($registry));
 
 // Weight
-$registry->set('weight', new Weight($registry));
+$registry->set('weight', $factory->newWeight($registry));
 
 // Length
-$registry->set('length', new Length($registry));
+$registry->set('length', $factory->newLength($registry));
 
 // Cart
-$registry->set('cart', new Cart($registry));
+$registry->set('cart', $factory->newCart($registry));
 
 //  Encryption
-$registry->set('encryption', new Encryption($config->get('config_encryption')));
+$registry->set('encryption', $factory->newEncryption($config->get('config_encryption')));
 		
 // Front Controller 
 $controller = new Front($registry);
 
-// Maintenance Mode
-$controller->addPreAction(new Action('common/maintenance'));
-
 // SEO URL's
-$controller->addPreAction(new Action('common/seo_url'));	
-	
+$controller->addPreAction($factory->newAction('common/seo_url'));
+
+// Maintenance Mode
+$controller->addPreAction($factory->newAction('common/maintenance'));
+
 // Router
 if (isset($request->get['route'])) {
-	$action = new Action($request->get['route']);
+	$action = $factory->newAction($request->get['route']);
 } else {
-	$action = new Action('common/home');
+	$action = $factory->newAction('common/home');
 }
 
 // Dispatch
-$controller->dispatch($action, new Action('error/not_found'));
+$controller->dispatch($action, $factory->newAction('error/not_found'));
 
 // Output
 $response->output();

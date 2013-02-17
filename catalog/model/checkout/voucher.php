@@ -1,4 +1,27 @@
 <?php
+
+/* ---------------------------------------------------------------------------------- */
+/*  OpenCart model class Voucher (with modififications for the override feature)      */
+/*                                                                                    */
+/*  Original file Copyright © 2012 by Daniel Kerr (www.opencart.com)                  */
+/*  Modifications Copyright © 2013 by J.Neuhoff (www.mhccorp.com)                     */
+/*                                                                                    */
+/*  This file is part of OpenCart.                                                    */
+/*                                                                                    */
+/*  OpenCart is free software: you can redistribute it and/or modify                  */
+/*  it under the terms of the GNU General Public License as published by              */
+/*  the Free Software Foundation, either version 3 of the License, or                 */
+/*  (at your option) any later version.                                               */
+/*                                                                                    */
+/*  OpenCart is distributed in the hope that it will be useful,                       */
+/*  but WITHOUT ANY WARRANTY; without even the implied warranty of                    */
+/*  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the                     */
+/*  GNU General Public License for more details.                                      */
+/*                                                                                    */
+/*  You should have received a copy of the GNU General Public License                 */
+/*  along with OpenCart.  If not, see <http://www.gnu.org/licenses/>.                 */
+/* ---------------------------------------------------------------------------------- */
+
 class ModelCheckoutVoucher extends Model {
 	public function addVoucher($order_id, $data) {
       	$this->db->query("INSERT INTO " . DB_PREFIX . "voucher SET order_id = '" . (int)$order_id . "', code = '" . $this->db->escape($data['code']) . "', from_name = '" . $this->db->escape($data['from_name']) . "', from_email = '" . $this->db->escape($data['from_email']) . "', to_name = '" . $this->db->escape($data['to_name']) . "', to_email = '" . $this->db->escape($data['to_email']) . "', voucher_theme_id = '" . (int)$data['voucher_theme_id'] . "', message = '" . $this->db->escape($data['message']) . "', amount = '" . (float)$data['amount'] . "', status = '1', date_added = NOW()");
@@ -68,7 +91,7 @@ class ModelCheckoutVoucher extends Model {
 		if ($order_info) {
 			$this->load->model('localisation/language');
 			
-			$language = new Language($order_info['language_directory']);
+			$language = new Language($order_info['language_directory'], $this->factory);
 			$language->load($order_info['language_filename']);	
 			$language->load('mail/voucher');
 			
@@ -76,7 +99,7 @@ class ModelCheckoutVoucher extends Model {
 			
 			foreach ($voucher_query->rows as $voucher) {
 				// HTML Mail
-				$template = new Template();
+				$template = $this->factory->newTemplate();
 				
 				$template->data['title'] = sprintf($language->get('text_subject'), $voucher['from_name']);
 				
@@ -87,7 +110,7 @@ class ModelCheckoutVoucher extends Model {
 				$template->data['text_footer'] = $language->get('text_footer');
 				
 				if (file_exists(DIR_IMAGE . $voucher['image'])) {
-					$template->data['image'] = HTTP_IMAGE . $voucher['image'];
+					$template->data['image'] = $this->config->get('config_url') . 'image/' . $voucher['image'];
 				} else {
 					$template->data['image'] = '';
 				}
@@ -102,7 +125,7 @@ class ModelCheckoutVoucher extends Model {
 					$html = $template->fetch('default/template/mail/voucher.tpl');
 				}
 					
-				$mail = new Mail(); 
+				$mail = $this->factory->newMail();
 				$mail->protocol = $this->config->get('config_mail_protocol');
 				$mail->parameter = $this->config->get('config_mail_parameter');
 				$mail->hostname = $this->config->get('config_smtp_host');

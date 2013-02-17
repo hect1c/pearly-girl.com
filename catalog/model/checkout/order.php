@@ -1,4 +1,27 @@
 <?php
+
+/* ---------------------------------------------------------------------------------- */
+/*  OpenCart model class Order (with modififications for the override feature)        */
+/*                                                                                    */
+/*  Original file Copyright © 2012 by Daniel Kerr (www.opencart.com)                  */
+/*  Modifications Copyright © 2013 by J.Neuhoff (www.mhccorp.com)                     */
+/*                                                                                    */
+/*  This file is part of OpenCart.                                                    */
+/*                                                                                    */
+/*  OpenCart is free software: you can redistribute it and/or modify                  */
+/*  it under the terms of the GNU General Public License as published by              */
+/*  the Free Software Foundation, either version 3 of the License, or                 */
+/*  (at your option) any later version.                                               */
+/*                                                                                    */
+/*  OpenCart is distributed in the hope that it will be useful,                       */
+/*  but WITHOUT ANY WARRANTY; without even the implied warranty of                    */
+/*  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the                     */
+/*  GNU General Public License for more details.                                      */
+/*                                                                                    */
+/*  You should have received a copy of the GNU General Public License                 */
+/*  along with OpenCart.  If not, see <http://www.gnu.org/licenses/>.                 */
+/* ---------------------------------------------------------------------------------- */
+
 class ModelCheckoutOrder extends Model {	
 	public function addOrder($data) {
 		$this->db->query("INSERT INTO `" . DB_PREFIX . "order` SET invoice_prefix = '" . $this->db->escape($data['invoice_prefix']) . "', store_id = '" . (int)$data['store_id'] . "', store_name = '" . $this->db->escape($data['store_name']) . "', store_url = '" . $this->db->escape($data['store_url']) . "', customer_id = '" . (int)$data['customer_id'] . "', customer_group_id = '" . (int)$data['customer_group_id'] . "', firstname = '" . $this->db->escape($data['firstname']) . "', lastname = '" . $this->db->escape($data['lastname']) . "', email = '" . $this->db->escape($data['email']) . "', telephone = '" . $this->db->escape($data['telephone']) . "', fax = '" . $this->db->escape($data['fax']) . "', payment_firstname = '" . $this->db->escape($data['payment_firstname']) . "', payment_lastname = '" . $this->db->escape($data['payment_lastname']) . "', payment_company = '" . $this->db->escape($data['payment_company']) . "', payment_company_id = '" . $this->db->escape($data['payment_company_id']) . "', payment_tax_id = '" . $this->db->escape($data['payment_tax_id']) . "', payment_address_1 = '" . $this->db->escape($data['payment_address_1']) . "', payment_address_2 = '" . $this->db->escape($data['payment_address_2']) . "', payment_city = '" . $this->db->escape($data['payment_city']) . "', payment_postcode = '" . $this->db->escape($data['payment_postcode']) . "', payment_country = '" . $this->db->escape($data['payment_country']) . "', payment_country_id = '" . (int)$data['payment_country_id'] . "', payment_zone = '" . $this->db->escape($data['payment_zone']) . "', payment_zone_id = '" . (int)$data['payment_zone_id'] . "', payment_address_format = '" . $this->db->escape($data['payment_address_format']) . "', payment_method = '" . $this->db->escape($data['payment_method']) . "', payment_code = '" . $this->db->escape($data['payment_code']) . "', shipping_firstname = '" . $this->db->escape($data['shipping_firstname']) . "', shipping_lastname = '" . $this->db->escape($data['shipping_lastname']) . "', shipping_company = '" . $this->db->escape($data['shipping_company']) . "', shipping_address_1 = '" . $this->db->escape($data['shipping_address_1']) . "', shipping_address_2 = '" . $this->db->escape($data['shipping_address_2']) . "', shipping_city = '" . $this->db->escape($data['shipping_city']) . "', shipping_postcode = '" . $this->db->escape($data['shipping_postcode']) . "', shipping_country = '" . $this->db->escape($data['shipping_country']) . "', shipping_country_id = '" . (int)$data['shipping_country_id'] . "', shipping_zone = '" . $this->db->escape($data['shipping_zone']) . "', shipping_zone_id = '" . (int)$data['shipping_zone_id'] . "', shipping_address_format = '" . $this->db->escape($data['shipping_address_format']) . "', shipping_method = '" . $this->db->escape($data['shipping_method']) . "', shipping_code = '" . $this->db->escape($data['shipping_code']) . "', comment = '" . $this->db->escape($data['comment']) . "', total = '" . (float)$data['total'] . "', affiliate_id = '" . (int)$data['affiliate_id'] . "', commission = '" . (float)$data['commission'] . "', language_id = '" . (int)$data['language_id'] . "', currency_id = '" . (int)$data['currency_id'] . "', currency_code = '" . $this->db->escape($data['currency_code']) . "', currency_value = '" . (float)$data['currency_value'] . "', ip = '" . $this->db->escape($data['ip']) . "', forwarded_ip = '" .  $this->db->escape($data['forwarded_ip']) . "', user_agent = '" . $this->db->escape($data['user_agent']) . "', accept_language = '" . $this->db->escape($data['accept_language']) . "', date_added = NOW(), date_modified = NOW()");
@@ -169,7 +192,7 @@ class ModelCheckoutOrder extends Model {
 				}
 			}
 
-			// Blacklist
+			// Ban IP
 			$status = false;
 			
 			$this->load->model('account/customer');
@@ -178,14 +201,14 @@ class ModelCheckoutOrder extends Model {
 				$results = $this->model_account_customer->getIps($order_info['customer_id']);
 				
 				foreach ($results as $result) {
-					if ($this->model_account_customer->isBlacklisted($result['ip'])) {
+					if ($this->model_account_customer->isBanIp($result['ip'])) {
 						$status = true;
 						
 						break;
 					}
 				}
 			} else {
-				$status = $this->model_account_customer->isBlacklisted($order_info['ip']);
+				$status = $this->model_account_customer->isBanIp($order_info['ip']);
 			}
 			
 			if ($status) {
@@ -241,7 +264,7 @@ class ModelCheckoutOrder extends Model {
 			}
 			
 			// Send out order confirmation mail
-			$language = new Language($order_info['language_directory']);
+			$language = new Language($order_info['language_directory'], $this->factory);
 			$language->load($order_info['language_filename']);
 			$language->load('mail/order');
 		 
@@ -256,7 +279,7 @@ class ModelCheckoutOrder extends Model {
 			$subject = sprintf($language->get('text_new_subject'), $order_info['store_name'], $order_id);
 		
 			// HTML Mail
-			$template = new Template();
+			$template = $this->factory->newTemplate();
 			
 			$template->data['title'] = sprintf($language->get('text_new_subject'), html_entity_decode($order_info['store_name'], ENT_QUOTES, 'UTF-8'), $order_id);
 			
@@ -282,7 +305,7 @@ class ModelCheckoutOrder extends Model {
 			$template->data['text_footer'] = $language->get('text_new_footer');
 			$template->data['text_powered'] = $language->get('text_new_powered');
 			
-			$template->data['logo'] = HTTP_IMAGE . $this->config->get('config_logo');		
+			$template->data['logo'] = $this->config->get('config_url') . 'image/' . $this->config->get('config_logo');		
 			$template->data['store_name'] = $order_info['store_name'];
 			$template->data['store_url'] = $order_info['store_url'];
 			$template->data['customer_id'] = $order_info['customer_id'];
@@ -473,6 +496,7 @@ class ModelCheckoutOrder extends Model {
 				$text .= $order_info['store_url'] . 'index.php?route=account/download' . "\n\n";
 			}
 			
+			// Comment
 			if ($order_info['comment']) {
 				$text .= $language->get('text_new_comment') . "\n\n";
 				$text .= $order_info['comment'] . "\n\n";
@@ -480,7 +504,7 @@ class ModelCheckoutOrder extends Model {
 			
 			$text .= $language->get('text_new_footer') . "\n\n";
 		
-			$mail = new Mail(); 
+			$mail = $this->factory->newMail(); 
 			$mail->protocol = $this->config->get('config_mail_protocol');
 			$mail->parameter = $this->config->get('config_mail_parameter');
 			$mail->hostname = $this->config->get('config_smtp_host');
@@ -542,7 +566,7 @@ class ModelCheckoutOrder extends Model {
 					$text .= $order_info['comment'] . "\n\n";
 				}
 			
-				$mail = new Mail(); 
+				$mail = $this->factory->newMail(); 
 				$mail->protocol = $this->config->get('config_mail_protocol');
 				$mail->parameter = $this->config->get('config_mail_parameter');
 				$mail->hostname = $this->config->get('config_smtp_host');
@@ -585,7 +609,7 @@ class ModelCheckoutOrder extends Model {
 				}
 			}			
 
-			// Blacklist
+			// Ban IP
 			$status = false;
 			
 			$this->load->model('account/customer');
@@ -595,14 +619,14 @@ class ModelCheckoutOrder extends Model {
 				$results = $this->model_account_customer->getIps($order_info['customer_id']);
 				
 				foreach ($results as $result) {
-					if ($this->model_account_customer->isBlacklisted($result['ip'])) {
+					if ($this->model_account_customer->isBanIp($result['ip'])) {
 						$status = true;
 						
 						break;
 					}
 				}
 			} else {
-				$status = $this->model_account_customer->isBlacklisted($order_info['ip']);
+				$status = $this->model_account_customer->isBanIp($order_info['ip']);
 			}
 			
 			if ($status) {
@@ -621,7 +645,7 @@ class ModelCheckoutOrder extends Model {
 			}	
 	
 			if ($notify) {
-				$language = new Language($order_info['language_directory']);
+				$language = new Language($order_info['language_directory'], $this->factory);
 				$language->load($order_info['language_filename']);
 				$language->load('mail/order');
 			
@@ -649,7 +673,7 @@ class ModelCheckoutOrder extends Model {
 					
 				$message .= $language->get('text_update_footer');
 
-				$mail = new Mail();
+				$mail = $this->factory->newMail();
 				$mail->protocol = $this->config->get('config_mail_protocol');
 				$mail->parameter = $this->config->get('config_mail_parameter');
 				$mail->hostname = $this->config->get('config_smtp_host');

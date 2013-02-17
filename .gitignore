@@ -32,6 +32,10 @@ download/*
 system/logs/*
 !system/logs/index.html
 
+# zend studio git plugin
+.settings/*
+.project
+
 # If you want to ignore install file use following lines [on development mode]
 # backup.install/*
 # install/*
