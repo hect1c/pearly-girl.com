@@ -1,14 +1,14 @@
 <!-- Header -->
 <?php echo $header; ?>
 
-<?php echo $column_left; ?><?php echo $column_right; ?>
+<?php echo $column_right; ?>
 	<!-- Content -->
 	<div id="content">
 		<!-- Image Slider 
 			@todo Add Custom Slider -->
-		<center><div style="height: 440px;">Slider</div></center>
+		<center><div><?php echo $content_top; ?></div></center>
 		<!-- Main Content/Products -->
-		<div id="main_content"><div class="wrap">Main Content/Category Display<br /><br /></div></div>
+		<div id="main_content"><div class="wrap"><?php echo $content_bottom; ?><?php echo $column_left; ?></div></div>
 	</div>
 </div> <!-- End of Container -->
 <?php echo $footer; ?>
